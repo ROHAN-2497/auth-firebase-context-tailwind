@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 
 const Register = () => {
-const {user} = useContext(AuthContext);
-  console.log(user);
+const {user, createUser} = useContext(AuthContext);
+  console.log(createUser);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -13,7 +13,17 @@ const {user} = useContext(AuthContext);
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    event.target.reset();
+
+    createUser(email, password)
+    .then(result =>{
+        const loggeddIn = result.user
+        console.log(loggeddIn)
+        form.reset();
+    })
+    .catch(error =>{
+        console.log(error)
+    })
+   
   };
   return (
     <div>
@@ -66,7 +76,7 @@ const {user} = useContext(AuthContext);
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-primary">Register</button>
               </div>
             </form>
           </div>
