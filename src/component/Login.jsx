@@ -10,6 +10,7 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+    form.reset();
  
    signIn(email, password)
    .then(result =>{
