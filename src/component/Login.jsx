@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 
 const Login = () => {
-     const {signIn} = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -11,16 +11,27 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     form.reset();
- 
-   signIn(email, password)
-   .then(result =>{
-    const loggedUser = result.user;
-    console.log(loggedUser)
-   })
-   .catch(error =>{
-    console.log(error.message)
-   })
-     console.log(email, password);
+
+    signIn(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    console.log(email, password);
+  };
+
+  const handleGoogleSignIn = () => {
+    return googleSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+      })
+      .catch((erro) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -65,11 +76,20 @@ const Login = () => {
                 <button className="btn btn-primary">Login</button>
               </div>
             </form>
-           
-             <Link to='/register'><button className="btn btn-active btn-link"><small>Go to Auth Master</small></button></Link>
 
-
-
+            <p>
+              {" "}
+              <Link to="/register">
+                <button className="btn btn-active btn-link">
+                  <small>Go to Auth Master</small>
+                </button>
+              </Link>
+            </p>
+            <div>
+              <button onClick={handleGoogleSignIn} className="btn btn-primary">
+                Google SignIn
+              </button>
+            </div>
           </div>
         </div>
       </div>
